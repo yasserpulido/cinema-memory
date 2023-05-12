@@ -1,12 +1,14 @@
-import { Detail } from "@/components";
 import styled from "@emotion/styled";
 import { Workshop, maxWidth, mediaQuery } from "anwar-components";
+
+import { Detail, List } from "@/components/movie";
 
 export default function Movie() {
   return (
     <Container>
       <Workshop>
         <Detail />
+        <List />
       </Workshop>
     </Container>
   );

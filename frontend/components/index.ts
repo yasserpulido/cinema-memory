@@ -1,1 +1,1 @@
-export { Detail } from "./movie";
+export * as Movie from "./movie";
