@@ -1,21 +1,59 @@
-import { useContext } from "react";
+import styled from "@emotion/styled";
 
-import { MovieProvider } from "@/providers";
+import {
+  ColumnProp,
+  Table,
+  Workshop,
+  maxWidth,
+  mediaQuery,
+} from "@/design-system";
+import { Movie } from "@/types";
+import { movieApi } from "@/apis";
+import { useRouter } from "next/router";
 
-export default function Home() {
-  const context = useContext<MovieProvider.ContextType>(MovieProvider.Context);
+type Props = {
+  movies: Array<Movie>;
+};
 
-  if (context.movies.length === 0) {
-    return <div>No movies</div>;
-  }
+export default function Home({ movies }: Props) {
+  const router = useRouter();
+
+  const columns: Array<ColumnProp<Movie>> = [
+    { heading: "Title", value: "title" },
+    { heading: "Year", value: "year" },
+  ];
+
+  const handleSelect = (movie: Movie) => {
+    router.push(`/movies/${movie.id}`);
+  };
 
   return (
-    <ul>
-      {context.movies.map((movie) => (
-        <li key={movie.id}>
-          {movie.title} ({movie.year})
-        </li>
-      ))}
-    </ul>
+    <Container>
+      <Workshop>
+        <Table
+          columns={columns}
+          data={movies}
+          onSelect={handleSelect}
+          isLoading={false}
+        />
+      </Workshop>
+    </Container>
   );
 }
+
+export async function getStaticProps(context) {
+  const movies = await movieApi.getMovies();
+
+  return {
+    props: { movies },
+  };
+}
+
+const Container = styled.div({
+  [mediaQuery.large]: {
+    marginTop: "2rem",
+    marginLeft: "auto",
+    marginRight: "auto",
+    maxWidth: maxWidth.medium,
+  },
+});

@@ -19,7 +19,7 @@ export type ContextType = {
   movie: Movie | undefined;
   movies: Array<Movie>;
   save: (movie: Movie) => void;
-  delete: (id: number) => void;
+  delete: (id: string) => void;
   movieSelected: (movie: Movie) => void;
   reset: () => void;
   resetQueryStatus: () => void;
@@ -139,3 +139,4 @@ export const Provider = ({ children }: Props) => {
     </Context.Provider>
   );
 };
+

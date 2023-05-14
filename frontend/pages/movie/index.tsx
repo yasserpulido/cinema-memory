@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
-import { Workshop, maxWidth, mediaQuery } from "anwar-components";
 
 import { Detail, List } from "@/components/movie";
+import { Workshop, maxWidth, mediaQuery } from "@/design-system";
 
 export default function Movie() {
   return (
     <Container>
       <Workshop>
         <Detail />
-        <List />
+        <List editMode={true} />
       </Workshop>
     </Container>
   );

@@ -1,8 +1,11 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 
 import styled from "@emotion/styled";
-
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+
+import { Movie } from "@/types";
+import { MovieProvider } from "@/providers";
+import { ALERT_SETUP } from "@/constants";
 import {
   Alert,
   Button,
@@ -10,11 +13,7 @@ import {
   InputNumber,
   Modal,
   colors,
-} from "anwar-components";
-
-import { Movie } from "@/types";
-import { MovieProvider } from "@/providers";
-import { ALERT_SETUP } from "@/constants";
+} from "@/design-system";
 
 export const Detail = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +27,7 @@ export const Detail = () => {
     defaultValues: context.movie,
   });
 
-  const onSubmit: SubmitHandler<Movie> = (data) => {
+  const onSubmit: SubmitHandler<Movie> = () => {
     setModalFooter({
       header: "Save",
       content: "Are you sure you want to save?",

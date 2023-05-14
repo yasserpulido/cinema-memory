@@ -2,6 +2,11 @@ import { Movie } from "@/types";
 
 const API_URL = "http://127.0.0.1:8000/movies/api/v1/movies/";
 
+export const getMovie = async (id: string) => {
+  const response = await fetch(API_URL + id);
+  return response.json();
+};
+
 export const getMovies = async () => {
   const response = await fetch(API_URL);
   return response.json();
