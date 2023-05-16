@@ -24,7 +24,7 @@ export default function Home({ movies }: Props) {
   ];
 
   const handleSelect = (movie: Movie) => {
-    router.push(`/movies/${movie.id}`);
+    router.push(`/movie/${movie.id}`);
   };
 
   return (
@@ -41,11 +41,12 @@ export default function Home({ movies }: Props) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
   const movies = await movieApi.getMovies();
 
   return {
     props: { movies },
+    revalidate: 60,
   };
 }
 

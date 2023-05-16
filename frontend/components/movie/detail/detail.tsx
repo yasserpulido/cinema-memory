@@ -51,7 +51,7 @@ export const Detail = () => {
   const resetHandler = () => {
     console.log("reset");
     reset(context.movie);
-    if (context.movie && context.movie.id > 0) {
+    if (context.movie && context.movie.id.length > 0) {
       context.reset();
     }
   };

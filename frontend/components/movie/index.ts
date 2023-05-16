@@ -1,5 +1,5 @@
 import { Detail } from "./detail";
 import { List } from "./list";
-import { Card } from "./card";
+import { Information } from "./information";
 
-export { Detail, List, Card };
+export { Detail, List, Information };

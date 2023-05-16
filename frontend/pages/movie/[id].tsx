@@ -2,6 +2,9 @@ import { GetStaticProps } from "next";
 
 import { movieApi } from "@/apis";
 import { Movie } from "@/types";
+import { Information } from "@/components/movie";
+import styled from "@emotion/styled";
+import { maxWidth, mediaQuery } from "@/design-system";
 
 type Props = {
   movie: Movie;
@@ -9,9 +12,9 @@ type Props = {
 
 export default function MoviePage({ movie }: Props) {
   return (
-    <div>
-      {movie.title} ({movie.year})
-    </div>
+    <Container>
+      <Information movie={movie} />
+    </Container>
   );
 }
 
@@ -31,3 +34,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: { movie },
   };
 };
+
+const Container = styled.div({
+  [mediaQuery.large]: {
+    marginTop: "2rem",
+    marginLeft: "auto",
+    marginRight: "auto",
+    maxWidth: maxWidth.medium,
+  },
+});
