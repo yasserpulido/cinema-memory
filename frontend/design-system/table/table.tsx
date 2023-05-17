@@ -27,7 +27,7 @@ const ENTRIES = [
 ];
 
 type BaseObject = {
-  id: string;
+  id: number;
   [key: string]: unknown;
 };
 
@@ -135,7 +135,7 @@ export const Table = <T extends BaseObject = BaseObject>({
         <Thead>
           <tr>
             {columns.map((c) => (
-              <Th key={c.heading.toLocaleLowerCase()} >{c.heading}</Th>
+              <Th key={c.heading.toLocaleLowerCase()}>{c.heading}</Th>
             ))}
           </tr>
         </Thead>
@@ -151,7 +151,6 @@ export const Table = <T extends BaseObject = BaseObject>({
                   <Td
                     key={`td-${d.id}-${c.heading}`}
                     onClick={() => onSelect(d)}
-
                   >
                     {d[c.value] as ReactNode}
                   </Td>
@@ -252,8 +251,5 @@ const Navigation = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "end",
-
-  "& button:first-of-type": {
-    marginRight: "0.2rem",
-  },
+  gap: "1rem",
 });

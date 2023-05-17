@@ -9,5 +9,6 @@ export { Heading } from "./heading";
 export { Input } from "./input";
 export { InputNumber } from "./input-number";
 export { Modal } from "./modal";
+export { Navbar } from "./navbar";
 export { Panel } from "./panel";
 export { Workshop } from "./workshop";

@@ -1,24 +1,16 @@
 import styled from "@emotion/styled";
 
 import { Detail, List } from "@/components/movie";
-import { Workshop, maxWidth, mediaQuery } from "@/design-system";
+import { Workshop } from "@/design-system";
+import { Layout } from "@/components/layout";
 
 export default function Movie() {
   return (
-    <Container>
+    <Layout>
       <Workshop>
         <Detail />
         <List editMode={true} />
       </Workshop>
-    </Container>
+    </Layout>
   );
 }
-
-const Container = styled.div({
-  [mediaQuery.large]: {
-    marginTop: "2rem",
-    marginLeft: "auto",
-    marginRight: "auto",
-    maxWidth: maxWidth.medium,
-  },
-});
