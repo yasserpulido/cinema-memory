@@ -86,14 +86,14 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant, size }) => ({
         ? colors.Salmon
         : variant === "warning"
         ? colors.LightTan
-        : variant === "link"
-        ? "none"
+        : variant === "link" || variant === "link-danger"
+        ? "transparent"
         : colors.LightGreenishBlue,
     color:
       variant === "warning"
         ? colors.Black
         : variant === "link"
-        ? colors.BlueDress
+        ? colors.DenimBlue
         : variant === "link-danger"
         ? colors.Salmon
         : colors.White,

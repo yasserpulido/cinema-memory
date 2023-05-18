@@ -9,7 +9,7 @@ export default function Movie() {
     <Layout>
       <Workshop>
         <Detail />
-        <List editMode={true} />
+        <List />
       </Workshop>
     </Layout>
   );

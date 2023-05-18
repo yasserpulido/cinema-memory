@@ -1,6 +1,8 @@
+export * as TimelineBase from "./timeline";
 export * from "./table";
 export * from "./theme";
 export { Alert } from "./alert";
+export { Anchor } from "./anchor";
 export { Button } from "./button";
 export { Card } from "./card";
 export { Checkbox } from "./checkbox";

@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
 
-import { ColumnProp, maxWidth, mediaQuery } from "@/design-system";
 import { Movie } from "@/types";
 import { movieApi } from "@/apis";
-import { useRouter } from "next/router";
 import { History } from "@/components/movie";
 import { Layout } from "@/components/layout";
 
@@ -12,8 +10,6 @@ type Props = {
 };
 
 export default function Home({ movies }: Props) {
-  const router = useRouter();
-
   return (
     <Layout>
       {movies.length > 0 ? (
