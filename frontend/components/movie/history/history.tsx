@@ -11,12 +11,13 @@ export const History = ({ movies }: Props) => {
   return (
     <PanelContainer>
       <TimelineBase.Timeline>
-        {movies.map((movie) => (
+        {movies.reverse().map((movie) => (
           <TimelineBase.Item
             key={movie.id}
             title={movie.title}
             description={movie.description}
             date={movie.year.toString()}
+            readMoreLink={`/movie/${movie.id}`}
           />
         ))}
       </TimelineBase.Timeline>
@@ -28,10 +29,3 @@ const PanelContainer = styled.div({
   display: "grid",
   gap: "1rem",
 });
-
-const FooterContainer = styled.div({
-  display: "flex",
-  justifyContent: "flex-end",
-});
-
-const Anchor = styled.a({});

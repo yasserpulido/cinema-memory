@@ -7,6 +7,7 @@ export { Button } from "./button";
 export { Card } from "./card";
 export { Checkbox } from "./checkbox";
 export { Dropdown } from "./dropdown";
+export { Footerbar } from "./footerbar";
 export { Heading } from "./heading";
 export { Input } from "./input";
 export { InputNumber } from "./input-number";

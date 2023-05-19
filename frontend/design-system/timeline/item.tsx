@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 import { colors } from "../theme/colors";
 import { Anchor } from "../anchor";
+import { useEffect, useState } from "react";
 
 type Props = {
   title: string;
@@ -11,14 +12,23 @@ type Props = {
 };
 
 export const Item = ({ description, title, date, readMoreLink }: Props) => {
+  const [shortDescription, setShortDescription] = useState<string>("");
+
+  useEffect(() => {
+    if (description.length > 200) {
+      const result = description.substring(0, 200) + "...";
+      setShortDescription(result);
+    }
+  }, [description]);
+
   return (
     <Container>
       <Header>
         <Title>{title}</Title>
         <Date>{date}</Date>
       </Header>
-      <Description>{description}</Description>
-      {readMoreLink !== "" && (
+      <Description>{shortDescription}</Description>
+      {readMoreLink !== undefined && readMoreLink.length > 0 && (
         <Footer>
           <Anchor href={readMoreLink} text="Read more" />
         </Footer>
@@ -30,23 +40,29 @@ export const Item = ({ description, title, date, readMoreLink }: Props) => {
 const Container = styled.div({
   border: `1px solid ${colors.DoveGrey}`,
   padding: "1rem",
-  display: "grid",
+  display: "flex",
+  flexDirection: "column",
   gap: "1rem",
 });
 
-const Header = styled.div({});
+const Header = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  marginBottom: "1rem",
+});
 
-const Title = styled.div({
+const Title = styled.span({
   marginBottom: "0.5rem",
 });
 
-const Date = styled.div({
+const Date = styled.span({
   fontWeight: "bold",
   fontSize: "0.8rem",
 });
 
-const Description = styled.div({
+const Description = styled.p({
   textAlign: "end",
+  lineHeight: "1.2rem",
 });
 
 const Footer = styled.div({

@@ -285,3 +285,9 @@ body {
   color: black;
   font-size: 16px;
 }
+
+#__next,
+html,
+body {
+  height: 100%;
+}

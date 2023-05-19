@@ -15,6 +15,11 @@ const Container = styled.div({
 
   "& > div": {
     marginBottom: "1rem",
+    height: "200px",
+  },
+
+  "& > div:last-child": {
+    marginBottom: 0,
   },
 
   "> div::before": {

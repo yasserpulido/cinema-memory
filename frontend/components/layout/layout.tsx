@@ -1,4 +1,4 @@
-import { Navbar, maxWidth, mediaQuery } from "@/design-system";
+import { Footerbar, Navbar, maxWidth, mediaQuery } from "@/design-system";
 import styled from "@emotion/styled";
 
 type Props = {
@@ -13,6 +13,7 @@ export const Layout = ({ children }: Props) => {
         items={[{ name: "CRUD", link: "/movie" }]}
       />
       <main>{children}</main>
+      <Footerbar text="Developed by Yasser Barzotto" />
     </Container>
   );
 };
@@ -23,4 +24,7 @@ const Container = styled.div({
     marginRight: "auto",
     maxWidth: maxWidth.medium,
   },
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
 });

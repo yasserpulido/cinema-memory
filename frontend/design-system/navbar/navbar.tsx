@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 import { colors } from "../theme";
+import { Anchor } from "../anchor";
 
 type Item = {
   name: string;
   link: string;
 };
+
 type Title = {
   name: string;
   color?: keyof typeof colors;
@@ -22,7 +24,8 @@ export const Navbar = ({
 }: Props) => {
   return (
     <Nav>
-      <Title color={color}>{title.name}</Title>
+
+      <Title color={color} href="/">{title.name}</Title>
       <NavList>
         {items.map((item) => (
           <NavItem key={item.name}>
@@ -45,9 +48,10 @@ type TitleProps = {
   color: keyof typeof colors;
 };
 
-const Title = styled.span(({ color }: TitleProps) => ({
+const Title = styled.a(({ color }: TitleProps) => ({
   fontWeight: "bold",
   color: colors[color],
+  textDecoration: "none",
 }));
 
 const NavList = styled.ul(() => ({
