@@ -1,49 +1,42 @@
-import React from "react";
-
 import styled from "@emotion/styled";
 import { Alert } from "grommet-icons";
-
-import { colors } from "../theme/colors";
-import { fontWeight } from "../theme";
+import { colors, fontWeight } from "../theme";
 
 type Props = {
   label: string;
   name: string;
+  rows?: number;
   value?: string | number;
   errors?: string;
-  type?: "text" | "date" | "password" | "search" | "time";
   placeholder?: string;
   disabled?: boolean;
   onChange: (value: string) => void;
 };
 
-export const Input = ({
+export const Textfield = ({
   label,
   name,
   value,
+  rows = 2,
   errors = "",
-  type = "text",
   placeholder = "Type here",
   disabled = false,
   onChange,
   ...props
 }: Props) => {
-  const hasDate = value !== "";
-
   return (
     <div>
       <FormGroup>
         <Label htmlFor={name}>{label}:</Label>
-        <InputBase
+        <TextfieldBase
           id={name}
           name={name}
           placeholder={placeholder}
-          type={type}
           onChange={(e) => onChange(e.currentTarget.value)}
           value={value}
-          hasDate={hasDate}
           disabled={disabled}
           errors={errors !== ""}
+          rows={rows >= 2 ? rows : 2}
           {...props}
         />
       </FormGroup>
@@ -68,20 +61,21 @@ const Label = styled.label({
   marginBottom: "0.2rem",
 });
 
-type InputBaseProps = {
-  hasDate: boolean;
+type FormGroupProps = {
   errors: boolean;
 };
 
-const InputBase = styled.input<InputBaseProps>(({ hasDate, errors }) => ({
+const TextfieldBase = styled.textarea<FormGroupProps>(({ errors }) => ({
+  resize: "none",
   border: `1px solid ${errors ? colors.PersianRed : colors.Black}`,
   borderBottom: `2px solid ${errors ? colors.PersianRed : colors.Black}`,
   borderRadius: 0,
   fontSize: "1rem",
-  padding: "0.2rem",
+  padding: "0",
+  paddingLeft: "0.2rem",
+  lineHeight: "1.5rem",
   width: "100%",
   fontWeight: fontWeight.regular,
-  color: hasDate ? colors.Black : colors.FrenchGrey,
 
   ":focus": {
     outline: `2px solid ${colors.DenimBlue}`,

@@ -15,3 +15,4 @@ export { Modal } from "./modal";
 export { Navbar } from "./navbar";
 export { Panel } from "./panel";
 export { Workshop } from "./workshop";
+export { Textfield } from "./textfield";

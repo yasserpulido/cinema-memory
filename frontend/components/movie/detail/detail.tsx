@@ -9,13 +9,17 @@ import { ALERT_SETUP } from "@/constants";
 import {
   Alert,
   Button,
+  Dropdown,
   Input,
   InputNumber,
   Modal,
+  Textfield,
   colors,
 } from "@/design-system";
+import { useGenre } from "@/hooks";
 
 export const Detail = () => {
+  const { data: genres } = useGenre();
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState({
     header: "",
@@ -51,7 +55,7 @@ export const Detail = () => {
   const resetHandler = () => {
     console.log("reset");
     reset(context.movie);
-    if (context.movie && context.movie.id.length > 0) {
+    if (context.movie && context.movie.id > 0) {
       context.reset();
     }
   };
@@ -69,50 +73,107 @@ export const Detail = () => {
             <Button variant="link-danger" text="Reset" onClick={resetHandler} />
           </Header>
           <InputsContainer>
-            <Controller
-              control={control}
-              name="title"
-              defaultValue=""
-              rules={{
-                required: {
-                  value: true,
-                  message: "Title is required",
-                },
-                minLength: {
-                  value: 3,
-                  message: "Title must be at least 3 characters",
-                },
-              }}
-              render={({ field, formState: { errors } }) => (
-                <Input
-                  label="Title"
-                  errors={errors.title?.message}
-                  {...field}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="year"
-              defaultValue={0}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Year is required",
-                },
-                min: {
-                  value: 1900,
-                  message: "Year must be at least 1900",
-                },
-              }}
-              render={({ field, formState: { errors } }) => (
-                <InputNumber
-                  label="Year"
-                  errors={errors.year?.message}
-                  {...field}
-                />
-              )}
-            />
+            <InputsGroup>
+              <Controller
+                control={control}
+                name="title"
+                defaultValue=""
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Title is required",
+                  },
+                  minLength: {
+                    value: 3,
+                    message: "Title must be at least 3 characters",
+                  },
+                }}
+                render={({ field, formState: { errors } }) => (
+                  <Input
+                    label="Title"
+                    errors={errors.title?.message}
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                control={control}
+                name="year"
+                defaultValue={0}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Year is required",
+                  },
+                  min: {
+                    value: 1900,
+                    message: "Year must be at least 1900",
+                  },
+                }}
+                render={({ field, formState: { errors } }) => (
+                  <InputNumber
+                    label="Year"
+                    errors={errors.year?.message}
+                    {...field}
+                  />
+                )}
+              />
+            </InputsGroup>
+            <InputsGroup>
+              <Controller
+                control={control}
+                name="rating"
+                defaultValue={0}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Rating is required",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Rating must be at least 0",
+                  },
+                  max: {
+                    value: 100,
+                    message: "Rating must be at most 100",
+                  },
+                }}
+                render={({ field, formState: { errors } }) => (
+                  <InputNumber
+                    label="Rating"
+                    errors={errors.rating?.message}
+                    max={100}
+                    min={0}
+                    step={1}
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                control={control}
+                name="rating"
+                defaultValue={0}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Rating is required",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Rating must be at least 0",
+                  },
+                }}
+                render={({ field, formState: { errors } }) => (
+                  <InputNumber
+                    label="Runtime"
+                    errors={errors.rating?.message}
+                    min={0}
+                    step={1}
+                    {...field}
+                  />
+                )}
+              />
+            </InputsGroup>
             <Controller
               control={control}
               name="description"
@@ -128,42 +189,66 @@ export const Detail = () => {
                 },
               }}
               render={({ field, formState: { errors } }) => (
-                <Input
+                <Textfield
                   label="Description"
                   errors={errors.description?.message}
                   {...field}
                 />
               )}
             />
-            <Controller
-              control={control}
-              name="rating"
-              defaultValue={0}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Rating is required",
-                },
-                min: {
-                  value: 1,
-                  message: "Rating must be at least 0",
-                },
-                max: {
-                  value: 100,
-                  message: "Rating must be at most 100",
-                },
-              }}
-              render={({ field, formState: { errors } }) => (
-                <InputNumber
-                  label="Rating"
-                  errors={errors.rating?.message}
-                  max={100}
-                  min={0}
-                  step={1}
-                  {...field}
-                />
-              )}
-            />
+            <InputsGroup>
+              <Controller
+                control={control}
+                name="rating"
+                defaultValue={0}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Rating is required",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Rating must be at least 0",
+                  },
+                  max: {
+                    value: 100,
+                    message: "Rating must be at most 100",
+                  },
+                }}
+                render={({ field, formState: { errors } }) => (
+                  <Dropdown
+                    label="Genre"
+                    options={genres !== undefined ? genres : []}
+                    errors={errors.rating?.message}
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                control={control}
+                name="rating"
+                defaultValue={0}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Rating is required",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Rating must be at least 0",
+                  },
+                }}
+                render={({ field, formState: { errors } }) => (
+                  <Dropdown
+                    label="Director"
+                    options={genres !== undefined ? genres : []}
+                    errors={errors.rating?.message}
+                    multiple={true}	
+                    {...field}
+                  />
+                )}
+              />
+            </InputsGroup>
           </InputsContainer>
           <Footer>
             <Button
@@ -231,6 +316,11 @@ const Header = styled.div({
 });
 
 const InputsContainer = styled.div({
+  display: "grid",
+  gap: "1rem",
+});
+
+const InputsGroup = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
   gap: "1rem",

@@ -21,35 +21,39 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-const InputNumber = React.forwardRef<HTMLInputElement, Props>(
-  (
-    { label, name, placeholder = "Type here", errors = "", onChange, ...props },
-    ref
-  ) => {
-    return (
-      <Container>
-        <FormGroup>
-          <Label htmlFor={name}>{label}:</Label>
-          <InputBase
-            id={name}
-            name={name}
-            placeholder={placeholder}
-            type="number"
-            ref={ref}
-            onChange={(e) => onChange(e.target.value)}
-            {...props}
-          />
-        </FormGroup>
-        {errors !== "" && (
-          <Error>
+export const InputNumber = ({
+  label,
+  name,
+  placeholder = "Type here",
+  errors = "",
+  onChange,
+  ...props
+}: Props) => {
+  return (
+    <Container>
+      <FormGroup>
+        <Label htmlFor={name}>{label}:</Label>
+        <InputBase
+          id={name}
+          name={name}
+          placeholder={placeholder}
+          type="number"
+          onChange={(e) => onChange(e.target.value)}
+          errors={errors !== ""}
+          {...props}
+        />
+      </FormGroup>
+      {errors !== "" && (
+        <Error>
+          <ErrorIcon>
             <Alert size="small" />
-            {errors}
-          </Error>
-        )}
-      </Container>
-    );
-  }
-);
+          </ErrorIcon>
+          <ErrorMessage>{errors}</ErrorMessage>
+        </Error>
+      )}
+    </Container>
+  );
+};
 
 const Container = styled.div({});
 
@@ -62,9 +66,13 @@ const Label = styled.label({
   marginBottom: "0.2rem",
 });
 
-const InputBase = styled.input({
-  border: `1px solid ${colors.Black}`,
-  borderBottom: `2px solid ${colors.Black}`,
+type InputBaseProps = {
+  errors: boolean;
+};
+
+const InputBase = styled.input<InputBaseProps>(({ errors }) => ({
+  border: `1px solid ${errors ? colors.PersianRed : colors.Black}`,
+  borderBottom: `2px solid ${errors ? colors.PersianRed : colors.Black}`,
   borderRadius: 0,
   fontSize: "1.2em",
   padding: "0",
@@ -87,13 +95,14 @@ const InputBase = styled.input({
     borderBottom: `2px solid ${colors.FrenchGrey}`,
     color: colors.FrenchGrey,
   },
-});
+}));
 
-const Error = styled.small({
-  color: colors.PersianRed,
+const Error = styled.div({
   display: "flex",
   alignItems: "center",
+});
 
+const ErrorIcon = styled.div({
   "& svg, path": {
     fontSize: "1rem",
     marginRight: "0.4rem",
@@ -101,4 +110,7 @@ const Error = styled.small({
   },
 });
 
-export default InputNumber;
+const ErrorMessage = styled.span({
+  color: colors.PersianRed,
+  fontSize: "0.8rem",
+});

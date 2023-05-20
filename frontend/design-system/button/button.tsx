@@ -66,7 +66,7 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant, size }) => ({
   cursor: "pointer",
   display: "inline-block",
   fontFamily: "inherit",
-  fontSize: "1.2em",
+  fontSize: "1rem",
   padding:
     variant === "link" || variant === "link-danger" ? 0 : "0.2rem 0.6rem",
   minWidth: variant === "link" || variant === "link-danger" ? 0 : "6rem",

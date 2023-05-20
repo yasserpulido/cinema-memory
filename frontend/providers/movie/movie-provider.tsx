@@ -6,7 +6,7 @@ import { Movie } from "@/types";
 import { movieApi } from "@/apis";
 
 const movieDefaultValues: Movie = {
-  id: "",
+  id: 0,
   title: "",
   description: "",
   year: 0,
@@ -19,7 +19,7 @@ export type ContextType = {
   movie: Movie | undefined;
   movies: Array<Movie>;
   save: (movie: Movie) => void;
-  delete: (id: string) => void;
+  delete: (id: number) => void;
   movieSelected: (movie: Movie) => void;
   reset: () => void;
   resetQueryStatus: () => void;
@@ -59,7 +59,6 @@ export const Provider = ({ children }: Props) => {
     mutationFn: movieApi.createMovie,
     onSuccess: () => {
       setQueryStatus("success");
-      console.log("created");
       queryClient.invalidateQueries(["Movie"]);
     },
     onError: () => {

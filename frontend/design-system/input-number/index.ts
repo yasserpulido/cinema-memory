@@ -1,1 +1,1 @@
-export { default as InputNumber } from "./input-number";
+export { InputNumber } from "./input-number";
