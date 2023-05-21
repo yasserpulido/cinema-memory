@@ -10,32 +10,34 @@ type Props = {
   onChange: (value: boolean) => void;
 };
 
-const Checkbox = React.forwardRef<HTMLInputElement, Props>(
-  ({ label, name, value, disabled = false, onChange, ...props }, ref) => {
-    const checked = useMemo(() => value, [value]);
+export const Checkbox = ({
+  label,
+  name,
+  value,
+  disabled = false,
+  onChange,
+  ...props
+}: Props) => {
+  const checked = useMemo(() => value, [value]);
 
-    return (
-      <Container>
-        <input
-          id={name}
-          name={name}
-          type="checkbox"
-          disabled={disabled}
-          ref={ref}
-          checked={checked}
-          onChange={(e) => onChange(e.currentTarget.checked)}
-          {...props}
-        />
-        <label htmlFor={name}>{label}</label>
-      </Container>
-    );
-  }
-);
+  return (
+    <Container>
+      <input
+        id={name}
+        name={name}
+        type="checkbox"
+        disabled={disabled}
+        checked={checked}
+        onChange={(e) => onChange(e.currentTarget.checked)}
+        {...props}
+      />
+      <label htmlFor={name}>{label}</label>
+    </Container>
+  );
+};
 
 const Container = styled.div({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 });
-
-export default Checkbox;

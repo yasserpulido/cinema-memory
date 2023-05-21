@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { colors, fontWeight } from "../theme";
 import { Alert } from "grommet-icons";
-import { ChangeEvent } from "react";
+import { ChangeEvent, Ref, forwardRef, useEffect, useState } from "react";
 
 export type Option = {
   id: number;
@@ -13,59 +13,78 @@ type Props = {
   name: string;
   options: Array<Option>;
   errors?: string;
-  value?: number;
+  value?: number[] | number;
   multiple?: boolean;
   onChange: (value: number[] | number) => void;
 };
 
-export const Dropdown = ({
-  label,
-  name,
-  options,
-  value,
-  errors = "",
-  multiple = false,
-  onChange,
-}: Props) => {
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    if (!multiple) {
-      onChange(Number(e.currentTarget.value));
-      return;
-    }
+export const Dropdown = forwardRef(
+  (
+    {
+      label,
+      name,
+      options,
+      value,
+      errors = "",
+      multiple = false,
+      onChange,
+    }: Props,
+    ref: Ref<HTMLSelectElement>
+  ) => {
+    const [valueToString, setValueToString] = useState<string[] | string>();
+    useEffect(() => {
+      if (multiple && value !== undefined && Array.isArray(value)) {
+        const result = value.map((option) => option.toString());
+        setValueToString(result);
+      } else {
+        setValueToString(value?.toString());
+      }
+    }, [value, multiple]);
 
-    const values = Array.from(e.currentTarget.selectedOptions, (option) =>
-      Number(option.value)
+    const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+      if (!multiple) {
+        onChange(Number(e.currentTarget.value));
+        return;
+      }
+
+      const values = Array.from(e.currentTarget.selectedOptions, (option) =>
+        Number(option.value)
+      );
+      onChange(values);
+    };
+
+    return (
+      <div>
+        <FormGroup>
+          <Label htmlFor={name}>{label}:</Label>
+          <Select
+            value={valueToString}
+            onChange={(e) => handleChange(e)}
+            multiple={multiple}
+            errors={errors !== ""}
+            ref={ref}
+          >
+            {options.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+        {errors !== "" && (
+          <Error>
+            <ErrorIcon>
+              <Alert size="small" />
+            </ErrorIcon>
+            <ErrorMessage>{errors}</ErrorMessage>
+          </Error>
+        )}
+      </div>
     );
-    onChange(values);
-  };
+  }
+);
 
-  return (
-    <div>
-      <FormGroup>
-        <Label htmlFor={name}>{label}:</Label>
-        <Select
-          value={value}
-          onChange={(e) => handleChange(e)}
-          multiple={multiple}
-        >
-          {options.map((option) => (
-            <option key={option.id} value={option.id}>
-              {option.name}
-            </option>
-          ))}
-        </Select>
-      </FormGroup>
-      {errors !== "" && (
-        <Error>
-          <ErrorIcon>
-            <Alert size="small" />
-          </ErrorIcon>
-          <ErrorMessage>{errors}</ErrorMessage>
-        </Error>
-      )}
-    </div>
-  );
-};
+Dropdown.displayName = "Dropdown";
 
 const FormGroup = styled.div({
   marginBottom: "0.2rem",
@@ -77,9 +96,13 @@ const Label = styled.label({
   fontSize: "1rem",
 });
 
-const Select = styled.select({
-  border: `1px solid ${colors.Black}`,
-  borderBottom: `2px solid ${colors.Black}`,
+type SelectProps = {
+  errors: boolean;
+};
+
+const Select = styled.select<SelectProps>(({ errors }) => ({
+  border: `1px solid ${errors ? colors.PersianRed : colors.Black}`,
+  borderBottom: `2px solid ${errors ? colors.PersianRed : colors.Black}`,
   borderRadius: 0,
   fontSize: "1rem",
   padding: "0.2rem",
@@ -87,7 +110,7 @@ const Select = styled.select({
   fontWeight: fontWeight.regular,
   color: colors.Black,
   background: colors.White,
-});
+}));
 
 const Error = styled.div({
   display: "flex",

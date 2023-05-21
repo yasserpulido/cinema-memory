@@ -4,4 +4,8 @@ export type Movie = {
   description: string;
   year: number;
   rating: number;
+  runtime: number;
+  genres: number[];
+  directors: number[];
+  image: File;
 };

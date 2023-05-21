@@ -16,10 +16,11 @@ import {
   Textfield,
   colors,
 } from "@/design-system";
-import { useGenre } from "@/hooks";
+import { useGenre, usePerson } from "@/hooks";
 
 export const Detail = () => {
   const { data: genres } = useGenre();
+  const { data: person } = usePerson();
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState({
     header: "",
@@ -31,7 +32,7 @@ export const Detail = () => {
     defaultValues: context.movie,
   });
 
-  const onSubmit: SubmitHandler<Movie> = () => {
+  const onSubmit: SubmitHandler<Movie> = (data) => {
     setModalFooter({
       header: "Save",
       content: "Are you sure you want to save?",
@@ -53,7 +54,6 @@ export const Detail = () => {
   };
 
   const resetHandler = () => {
-    console.log("reset");
     reset(context.movie);
     if (context.movie && context.movie.id > 0) {
       context.reset();
@@ -66,7 +66,7 @@ export const Detail = () => {
 
   return (
     <Fragment>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Fieldset>
           <Legend>Movie</Legend>
           <Header>
@@ -151,16 +151,16 @@ export const Detail = () => {
               />
               <Controller
                 control={control}
-                name="rating"
+                name="runtime"
                 defaultValue={0}
                 rules={{
                   required: {
                     value: true,
-                    message: "Rating is required",
+                    message: "Runtime is required",
                   },
                   min: {
                     value: 1,
-                    message: "Rating must be at least 0",
+                    message: "Runtime must be at least 1",
                   },
                 }}
                 render={({ field, formState: { errors } }) => (
@@ -199,56 +199,62 @@ export const Detail = () => {
             <InputsGroup>
               <Controller
                 control={control}
-                name="rating"
-                defaultValue={0}
+                name="genres"
+                defaultValue={[]}
                 rules={{
                   required: {
                     value: true,
-                    message: "Rating is required",
-                  },
-                  min: {
-                    value: 1,
-                    message: "Rating must be at least 0",
-                  },
-                  max: {
-                    value: 100,
-                    message: "Rating must be at most 100",
+                    message: "Genre is required",
                   },
                 }}
                 render={({ field, formState: { errors } }) => (
                   <Dropdown
-                    label="Genre"
+                    label="Genres"
                     options={genres !== undefined ? genres : []}
-                    errors={errors.rating?.message}
+                    errors={errors.genres?.message}
+                    multiple={true}
                     {...field}
                   />
                 )}
               />
               <Controller
                 control={control}
-                name="rating"
-                defaultValue={0}
+                name="directors"
+                defaultValue={[]}
                 rules={{
                   required: {
                     value: true,
-                    message: "Rating is required",
-                  },
-                  min: {
-                    value: 1,
-                    message: "Rating must be at least 0",
+                    message: "Director is required",
                   },
                 }}
                 render={({ field, formState: { errors } }) => (
                   <Dropdown
-                    label="Director"
-                    options={genres !== undefined ? genres : []}
-                    errors={errors.rating?.message}
-                    multiple={true}	
+                    label="Directors"
+                    options={person !== undefined ? person : []}
+                    errors={errors.directors?.message}
+                    multiple={true}
                     {...field}
                   />
                 )}
               />
             </InputsGroup>
+            <Controller
+              control={control}
+              name={"image"}
+              rules={{ required: "Image is required" }}
+              render={({ field }) => {
+                return (
+                  <input
+                    type="file"
+                    {...field}
+                    value={undefined}
+                    onChange={(e) => {
+                      field.onChange(e.target.files?.item(0)); // store the File object
+                    }}
+                  />
+                );
+              }}
+            />
           </InputsContainer>
           <Footer>
             <Button

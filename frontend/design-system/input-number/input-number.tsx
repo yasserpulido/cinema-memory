@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref, forwardRef } from "react";
 
 import styled from "@emotion/styled";
 import { Alert } from "grommet-icons";
@@ -21,39 +21,47 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-export const InputNumber = ({
-  label,
-  name,
-  placeholder = "Type here",
-  errors = "",
-  onChange,
-  ...props
-}: Props) => {
-  return (
-    <Container>
-      <FormGroup>
-        <Label htmlFor={name}>{label}:</Label>
-        <InputBase
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          type="number"
-          onChange={(e) => onChange(e.target.value)}
-          errors={errors !== ""}
-          {...props}
-        />
-      </FormGroup>
-      {errors !== "" && (
-        <Error>
-          <ErrorIcon>
-            <Alert size="small" />
-          </ErrorIcon>
-          <ErrorMessage>{errors}</ErrorMessage>
-        </Error>
-      )}
-    </Container>
-  );
-};
+export const InputNumber = forwardRef(
+  (
+    {
+      label,
+      name,
+      placeholder = "Type here",
+      errors = "",
+      onChange,
+      ...props
+    }: Props,
+    ref: Ref<HTMLInputElement>
+  ) => {
+    return (
+      <Container>
+        <FormGroup>
+          <Label htmlFor={name}>{label}:</Label>
+          <InputBase
+            id={name}
+            name={name}
+            placeholder={placeholder}
+            type="number"
+            onChange={(e) => onChange(e.target.value)}
+            errors={errors !== ""}
+            ref={ref}
+            {...props}
+          />
+        </FormGroup>
+        {errors !== "" && (
+          <Error>
+            <ErrorIcon>
+              <Alert size="small" />
+            </ErrorIcon>
+            <ErrorMessage>{errors}</ErrorMessage>
+          </Error>
+        )}
+      </Container>
+    );
+  }
+);
+
+InputNumber.displayName = "InputNumber";
 
 const Container = styled.div({});
 

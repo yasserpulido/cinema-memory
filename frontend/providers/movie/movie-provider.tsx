@@ -11,6 +11,10 @@ const movieDefaultValues: Movie = {
   description: "",
   year: 0,
   rating: 0,
+  runtime: 0,
+  genres: [],
+  directors: [],
+  image: "",
 };
 
 export type ContextType = {
@@ -103,7 +107,7 @@ export const Provider = ({ children }: Props) => {
     setMovie(movieDefaultValues);
   };
 
-  const deleteHandler = (id: string) => {
+  const deleteHandler = (id: number) => {
     deleteMutation.mutate(id);
     setMovie(movieDefaultValues);
   };
@@ -138,4 +142,3 @@ export const Provider = ({ children }: Props) => {
     </Context.Provider>
   );
 };
-

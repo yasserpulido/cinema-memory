@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref, forwardRef } from "react";
 
 import styled from "@emotion/styled";
 import { Alert } from "grommet-icons";
@@ -17,47 +17,55 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-export const Input = ({
-  label,
-  name,
-  value,
-  errors = "",
-  type = "text",
-  placeholder = "Type here",
-  disabled = false,
-  onChange,
-  ...props
-}: Props) => {
-  const hasDate = value !== "";
+export const Input = forwardRef(
+  (
+    {
+      label,
+      name,
+      value,
+      errors = "",
+      type = "text",
+      placeholder = "Type here",
+      disabled = false,
+      onChange,
+      ...props
+    }: Props,
+    ref: Ref<HTMLInputElement>
+  ) => {
+    const hasDate = value !== "";
 
-  return (
-    <div>
-      <FormGroup>
-        <Label htmlFor={name}>{label}:</Label>
-        <InputBase
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          type={type}
-          onChange={(e) => onChange(e.currentTarget.value)}
-          value={value}
-          hasDate={hasDate}
-          disabled={disabled}
-          errors={errors !== ""}
-          {...props}
-        />
-      </FormGroup>
-      {errors !== "" && (
-        <Error>
-          <ErrorIcon>
-            <Alert size="small" />
-          </ErrorIcon>
-          <ErrorMessage>{errors}</ErrorMessage>
-        </Error>
-      )}
-    </div>
-  );
-};
+    return (
+      <div>
+        <FormGroup>
+          <Label htmlFor={name}>{label}:</Label>
+          <InputBase
+            id={name}
+            name={name}
+            placeholder={placeholder}
+            type={type}
+            onChange={(e) => onChange(e.currentTarget.value)}
+            value={value}
+            hasDate={hasDate}
+            disabled={disabled}
+            errors={errors !== ""}
+            ref={ref}
+            {...props}
+          />
+        </FormGroup>
+        {errors !== "" && (
+          <Error>
+            <ErrorIcon>
+              <Alert size="small" />
+            </ErrorIcon>
+            <ErrorMessage>{errors}</ErrorMessage>
+          </Error>
+        )}
+      </div>
+    );
+  }
+);
+
+Input.displayName = "Input";
 
 const FormGroup = styled.div({
   marginBottom: "0.2rem",

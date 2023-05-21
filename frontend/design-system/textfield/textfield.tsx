@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Alert } from "grommet-icons";
 import { colors, fontWeight } from "../theme";
+import { Ref, forwardRef } from "react";
 
 type Props = {
   label: string;
@@ -13,44 +14,52 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-export const Textfield = ({
-  label,
-  name,
-  value,
-  rows = 2,
-  errors = "",
-  placeholder = "Type here",
-  disabled = false,
-  onChange,
-  ...props
-}: Props) => {
-  return (
-    <div>
-      <FormGroup>
-        <Label htmlFor={name}>{label}:</Label>
-        <TextfieldBase
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          onChange={(e) => onChange(e.currentTarget.value)}
-          value={value}
-          disabled={disabled}
-          errors={errors !== ""}
-          rows={rows >= 2 ? rows : 2}
-          {...props}
-        />
-      </FormGroup>
-      {errors !== "" && (
-        <Error>
-          <ErrorIcon>
-            <Alert size="small" />
-          </ErrorIcon>
-          <ErrorMessage>{errors}</ErrorMessage>
-        </Error>
-      )}
-    </div>
-  );
-};
+export const Textfield = forwardRef(
+  (
+    {
+      label,
+      name,
+      value,
+      rows = 2,
+      errors = "",
+      placeholder = "Type here",
+      disabled = false,
+      onChange,
+      ...props
+    }: Props,
+    ref: Ref<HTMLTextAreaElement>
+  ) => {
+    return (
+      <div>
+        <FormGroup>
+          <Label htmlFor={name}>{label}:</Label>
+          <TextfieldBase
+            id={name}
+            name={name}
+            placeholder={placeholder}
+            onChange={(e) => onChange(e.currentTarget.value)}
+            value={value}
+            disabled={disabled}
+            errors={errors !== ""}
+            rows={rows >= 2 ? rows : 2}
+            ref={ref}
+            {...props}
+          />
+        </FormGroup>
+        {errors !== "" && (
+          <Error>
+            <ErrorIcon>
+              <Alert size="small" />
+            </ErrorIcon>
+            <ErrorMessage>{errors}</ErrorMessage>
+          </Error>
+        )}
+      </div>
+    );
+  }
+);
+
+Textfield.displayName = "Textfield";
 
 const FormGroup = styled.div({
   marginBottom: "0.2rem",
@@ -76,6 +85,7 @@ const TextfieldBase = styled.textarea<FormGroupProps>(({ errors }) => ({
   lineHeight: "1.5rem",
   width: "100%",
   fontWeight: fontWeight.regular,
+  fontFamily: "inherit",
 
   ":focus": {
     outline: `2px solid ${colors.DenimBlue}`,
