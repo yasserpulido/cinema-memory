@@ -6,6 +6,9 @@ export type Movie = {
   rating: number;
   runtime: number;
   genres: number[];
+  genresNames: string[];
   directors: number[];
+  directorsNames: string[];
   image: File;
+  imageUrl: string;
 };

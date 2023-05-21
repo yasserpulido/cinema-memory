@@ -14,8 +14,8 @@ class MovieView(viewsets.ModelViewSet):
     # permission_classes = [
     #     permissions.IsAuthenticatedOrReadOnly]
 
-    def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(creator=self.request.user)
 
 
 class GenreView(viewsets.ModelViewSet):

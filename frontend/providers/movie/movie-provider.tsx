@@ -14,7 +14,8 @@ const movieDefaultValues: Movie = {
   runtime: 0,
   genres: [],
   directors: [],
-  image: "",
+  image: {} as File,
+  imageUrl: "",
 };
 
 export type ContextType = {
@@ -47,7 +48,7 @@ type Props = {
 
 export const Provider = ({ children }: Props) => {
   const queryClient = useQueryClient();
-  const [movie, setMovie] = useState<Movie>();
+  const [movie, setMovie] = useState<Movie>(movieDefaultValues);
   const [movies, setMovies] = useState<Array<Movie>>([]);
   const [queryStatus, setQueryStatus] = useState<"idle" | "success" | "error">(
     "idle"

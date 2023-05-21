@@ -5,6 +5,7 @@ import { Movie } from "@/types";
 import { Information } from "@/components/movie";
 import styled from "@emotion/styled";
 import { maxWidth, mediaQuery } from "@/design-system";
+import { Layout } from "@/components/layout";
 
 type Props = {
   movie: Movie;
@@ -12,15 +13,20 @@ type Props = {
 
 export default function MoviePage({ movie }: Props) {
   return (
-    <Container>
+    <Layout>
       <Information movie={movie} />
-    </Container>
+    </Layout>
   );
 }
 
 export async function getStaticPaths() {
+  const movies = await movieApi.getMovies();
+  const paths = movies.map((movie: Movie) => ({
+    params: { id: movie.id.toString() },
+  }));
+
   return {
-    paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
+    paths,
     fallback: false,
   };
 }

@@ -3,3 +3,4 @@ export * from "./genre";
 export * from "./modal";
 export * from "./movie";
 export * from "./person";
+export * from "./response";

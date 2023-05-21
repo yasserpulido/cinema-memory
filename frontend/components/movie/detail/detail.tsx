@@ -64,6 +64,8 @@ export const Detail = () => {
     reset(context.movie);
   }, [reset, context]);
 
+  console.log(context.movie)
+
   return (
     <Fragment>
       <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -241,7 +243,6 @@ export const Detail = () => {
             <Controller
               control={control}
               name={"image"}
-              rules={{ required: "Image is required" }}
               render={({ field }) => {
                 return (
                   <input
@@ -251,6 +252,7 @@ export const Detail = () => {
                     onChange={(e) => {
                       field.onChange(e.target.files?.item(0)); // store the File object
                     }}
+                    accept="image/png, image/jpeg"
                   />
                 );
               }}
@@ -302,6 +304,10 @@ export const Detail = () => {
     </Fragment>
   );
 };
+
+const Img = styled.img({
+  width: "100%",
+});
 
 const Form = styled.form({
   marginBottom: "1rem",

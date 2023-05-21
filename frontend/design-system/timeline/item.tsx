@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const Item = ({ description, title, date, readMoreLink }: Props) => {
-  const [shortDescription, setShortDescription] = useState<string>("");
+  const [shortDescription, setShortDescription] = useState<string>(description);
 
   useEffect(() => {
     if (description.length > 200) {
